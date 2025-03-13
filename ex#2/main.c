@@ -10,6 +10,7 @@ typedef struct employee {
 
 
 void emp_writefile(employee_t emp[], int n);
+int emp_average_age(employee_t emp[],int n);
 void emp_readfile(employee_t emp[]);
 void emp_info(employee_t emp);
 
@@ -40,13 +41,15 @@ int main() {
     for (int i = 0; i < 3; i++) {
         emp_info(read_emp[i]);
     }
+    int age = emp_average_age(emp,3);
+    printf("Average age: %d\n\n",age);
 
     return 0;
 }
 
 
 void emp_writefile(employee_t emp[], int n) {
-    FILE *fp = fopen("employee.bin", "wb");
+    FILE *fp = fopen("employee.bin", "wb+");
     if (fp == NULL) {
         printf("文件打开失败！\n");
         return;
@@ -58,7 +61,7 @@ void emp_writefile(employee_t emp[], int n) {
 }
 
 void emp_readfile(employee_t emp[]) {
-    FILE *fp = fopen("employee.bin", "rb");
+    FILE *fp = fopen("employee.bin", "rb+");
     if (fp == NULL) {
         printf("文件打开失败！\n");
         return;
@@ -71,6 +74,14 @@ void emp_readfile(employee_t emp[]) {
     fclose(fp);
 }
 
+
+int emp_average_age(employee_t emp[],int n){
+    int sum = 0;
+    for (int i = 0;i<3;i++){
+        sum+=emp[i].age;
+    }
+    return sum/3;
+}
 
 void emp_info(employee_t emp) {
     printf("employee id = %d\n", emp.id);
